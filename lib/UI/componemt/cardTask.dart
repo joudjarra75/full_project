@@ -1,12 +1,15 @@
 import 'package:final_project/cache/shared_pref.dart';
 import 'package:flutter/material.dart';
 import '../designs/colors.dart';
-import 'package:final_project/toDoApp.dart';
+// import 'package:final_project/toDoApp.dart';
 
 class Cardtask extends StatefulWidget {
   String taskTitle;
   bool isCheck ;
-  Cardtask({required this.taskTitle ,  this.isCheck = false });
+  Function changeFun;
+int index;
+Function delete;
+  Cardtask({required this.taskTitle , required this.isCheck , required this.changeFun,required this.index,required this.delete});
 
   @override
   State<Cardtask> createState() => _CardtaskState();
@@ -14,25 +17,6 @@ class Cardtask extends StatefulWidget {
 
 class _CardtaskState extends State<Cardtask> {
 
-  // void _loadData() async{
-  //   bool saveData = await CacheData.getData(key: "userStatus") ??  false ;
-  //   setState(() {
-  //     widget.isCheck =  saveData;
-  //   });
-  // }
-
-  // void _saveData(dynamic data) async{
-  //   // SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   // await prefs.setBool('userStatus', data);
-  //    CacheData.setData(key: "userStatus", value:data);
-  //
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _loadData();
-  // }
   @override
 
   Widget build(BuildContext context) {
@@ -43,28 +27,35 @@ class _CardtaskState extends State<Cardtask> {
         child: Card(
           color: taskCard,
           // surfaceTintColor:taskCard ,
-          child:  Padding(
-            padding: const EdgeInsets.all(15),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(widget.taskTitle,
                   style: TextStyle(
+                    decoration: widget.isCheck ? TextDecoration.lineThrough : null,
+                      decorationThickness: 4,
                       color: txtColor
                   ),),
-                 InkWell(child: widget.isCheck? Icon(Icons.check_box): Icon(Icons.check_box_outline_blank),
-                 onTap: (){
+                 Row(
 
-                   // completedTasks();
+                   children: [
+                     Padding(
+                       padding: const EdgeInsets.all(15),
+                       child: InkWell(child: widget.isCheck? Icon(Icons.check_box): Icon(Icons.check_box_outline_blank),
+                       onTap: (){
+                         widget.changeFun(widget.index);
+                       },),
+                     ),
+                     IconButton(onPressed: (){
+                       widget.delete(widget.index);
+                     }
+                       ,icon: Icon(Icons.delete),)
 
-                   setState(() {
-                     // completedTasks();
-                     widget.isCheck = !widget.isCheck;
+                   ],
+                 ),
 
-                     // _saveData(widget.isCheck);
-
-                   });
-                 },)
               ],
             ),
           ),

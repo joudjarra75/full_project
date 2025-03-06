@@ -2,6 +2,9 @@ import 'package:final_project/cache/shared_pref.dart';
 import 'package:final_project/toDoApp.dart';
 import 'package:flutter/material.dart';
 
+import 'UI/on_boarding.dart';
+import 'UI/splashScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
  await CacheData.cacheInit();
@@ -18,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
 
-      home:Todoapp()
+      home:OnBoardingScreen()
     );
   }
 }
